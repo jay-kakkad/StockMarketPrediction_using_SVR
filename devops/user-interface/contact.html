@@ -344,6 +344,7 @@
             </ol>
           </div>
         </div>
+
         <!-- page start-->
         <div class="row">
           <div class="col-lg-6">
@@ -352,36 +353,46 @@
             </div>
             <div id="sendmessage">Your message has been sent. Thank you!</div>
             <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contact__form" action="mail.php">
+            <div id="form-messages"></div>
+            <form id="ajax-contact" method="post" role="form" class="contact__form" action="mail.php" >
 
-            	<!-- form message -->
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="alert alert-success contact__msg" style="display: none" role="alert">
-                                            Your message was sent successfully.
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end message -->
+            <!-- form message -->
+            <div class="row">
+              <div class="col-12">
+                <div class="alert alert-success contact__msg" style="display: none" role="alert">
+                 Your message was sent successfully.
+                </div>
+              </div>
+            </div>
+              <!-- end message -->
 
               <div class="form-group">
+                <label for="name">Name:</label>
                 <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required/>
                 <div class="validation"></div>
               </div>
+
               <div class="form-group">
+                <label for="email">Email:</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required/>
                 <div class="validation"></div>
               </div>
+
               <div class="form-group">
+                <label for="subject">Subject:</label>
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required/>
                 <div class="validation"></div>
               </div>
+
               <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                <label for="message">Message:</label>
+                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message" required></textarea>
                 <div class="validation"></div>
               </div>
 
-              <div class="text-center"><input name="submit" type="submit" class="btn btn-primary btn-lg" value="Send Message"></div>
+              <div class="text-center"><button type="submit" name="submit" class="btn btn-primary btn-lg">Send</button>
+
+              </div>
             </form>
           </div>
 
@@ -428,6 +439,7 @@
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="main.js"></script>
+
 
 </body>
 
