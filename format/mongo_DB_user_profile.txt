@@ -12,3 +12,12 @@ INSERT
 "status": ""
 }
 --------------------------
+News
+{
+"published_date":"",
+"source":"",
+"label":"",
+"authors":"",
+"summary":"",
+"text":"",
+}

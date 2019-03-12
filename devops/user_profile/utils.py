@@ -20,7 +20,7 @@ class DB:
     DATABASE = None
 
     def __init__(self):
-         self.CLIENT = pymongo.MongoClient("mongodb+srv://jsr:g9TdO0CTga2Ncsvu@cluster0-10kli.gcp.mongodb.net/test?retryWrites=true")
+         self.CLIENT = pymongo.MongoClient("mongodb+srv://jsr:tMDSfCpnqyjSy3Pw@cluster0-10kli.gcp.mongodb.net/test?retryWrites=true")
          self.DATABASE =  self.CLIENT[self.DB_Name][self.COLLECTION_Name]
 
     def close_db(self):
