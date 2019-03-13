@@ -4,16 +4,18 @@ from numerical_data.nse_stocks.pfizer import PFIZER
 # from numerical_data.exchanges.sensex import SENSEX
 # from numerical_data.exchanges.nifty50 import NIFTY
 # from user_profile.user_administration import User
-from news_data.news_feeds import MoneyControl
-
+from news_data.news_feeds import Feeds
 # drreddy = DRREDDY()
 # sunpharma = SUNPHARMA()
 # pfizer = PFIZER()
 # sensex = SENSEX()
 # nifty = NIFTY()
 # user = User()
-mc = MoneyControl()
-mc.insert_feeds()
+# mc = TimesOfIndia()
+# mc.insert_feeds()
+mc = Feeds().retrieve()
+print(mc)
+
 # print(user.create_user())
 # print(user.login_verification("admin@somaiya.edu","admin").ID)
 # drreddy.sma(20)

@@ -35,7 +35,7 @@ class Database:
         return result
 
 
-    def delete_data(self,client,collectiona_name,query):
+    def delete_data(self,collectiona_name,query):
         client = Database().initialize_db()
         db = client["jsrdb"]
         db[collectiona_name].delete_many(query)
