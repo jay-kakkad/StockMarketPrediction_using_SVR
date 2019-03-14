@@ -1,10 +1,7 @@
-from datetime import date
 
 import pandas as pd
 import pymongo
 import pandas_datareader.data as web
-import datetime as dt
-import numpy
 import json
 
 
@@ -14,7 +11,7 @@ import json
 # start_date,end_date = start and end dates between which all data will be fetched
 
 class Database:
-    def update_inter_day_data(self,stock,source,start_date,end_date,collection_name):
+    def inter_day_data(self,stock,source,start_date,end_date,collection_name):
         client = Database().initialize_db()
         db = client["jsrdb"]
         df = web.DataReader(stock,source,start_date,end_date)
@@ -22,6 +19,17 @@ class Database:
         df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
         records = json.loads(df.T.to_json(date_format="iso")).values()
         try:
+            db[collection_name].insert_many(records)
+            print("Inserted " + str(len(records)) + " Values")
+            client.close()
+        except Exception as e:
+            print(str(e))
+
+    def store_data(self,df,collection_name):
+        client = Database().initialize_db()
+        db = client["jsrdb"]
+        try:
+            records = json.loads(df.T.to_json(date_format="iso")).values()
             db[collection_name].insert_many(records)
             print("Inserted " + str(len(records)) + " Values")
             client.close()
@@ -60,35 +68,50 @@ class Database:
 
 class Technical_Indicators:
     OBJ = None
+    DF = None
 
-    def __init__(self,obj):
+    def __init__(self,obj=None):
         self.OBJ = obj
+        self.DF =obj.retrieve_inter_day_data()
 
-    def indicator_MA(self,window_size):
-        df = self.OBJ.retrieve_inter_day_data()
-        ma = df["Close"].rolling(window=window_size).mean()
-        return ma
+    def daily_update(self):
 
-    def indicator_EMA(self,windows_size):
-        df = self.OBJ.retrieve_inter_day_data()
-        ema = df["Close"].ewm(span=windows_size, adjust=False)
-        return ema
-
-    def indicator_VWAP(self):
-        df = self.OBJ.retrieve_inter_day_data()
-        q = df["Close"]
-        p = df["Volume"]
-        vmap = (p * q).cumsum() / q.cumsum()
-        return vmap
-
-    def indicator_MACD(self):
         return None
 
-    def indicator_STOCH(self):
-        return None
+    def MA(self,window_size,adj_close):
+        MA = adj_close.rolling(window=window_size).mean()
+        return MA
 
-    def indicator_RSI(self):
-        return None
+    def EMWA(self,windows_size,adj_close):
+        EMWA =adj_close.ewm(span=windows_size,adjust=False).mean()
+        return EMWA
+
+    def VMAP(self,adj_close,volume):
+        q = adj_close
+        p = volume
+        VMAP = (p * q).cumsum() / q.cumsum()
+        return VMAP
+
+    def MACD(self,data,obj):
+        MACD = Technical_Indicators(obj).EMWA(26,data)-Technical_Indicators(obj).EMWA(12,data)
+        return MACD
+
+    def STOK(self,close,low,high,n):
+        STOK = ((close - low.rolling(n).min()) / (high.rolling(n).max() - low.rolling(n).min())) * 100
+        return STOK
+
+    def STOD(self,STOK):
+        STOD = STOK.rolling(3).mean()
+        return STOD
+
+    def RSI(self,delta,n):
+        dUp, dDown = delta.copy(), delta.copy()
+        dUp[dUp < 0] = 0
+        dDown[dDown > 0] = 0
+        RolUp = dUp.rolling(n).mean()
+        RolDown = dDown.rolling(n).mean()
+        RS = RolUp/RolDown
+        return RS
 
     def indicator_ADX(self):
         return None

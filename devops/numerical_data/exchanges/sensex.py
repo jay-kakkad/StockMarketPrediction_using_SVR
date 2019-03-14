@@ -51,6 +51,4 @@ class SENSEX:
             print("Recheck DB")
 
 if __name__ == "__main__":
-    # SENSEX().store_inter_day_data()
-    # print(SENSEX().retrieve_inter_day_data())
     SENSEX().daily_update()

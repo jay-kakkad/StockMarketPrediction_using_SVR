@@ -1,0 +1,1 @@
+1 SVR(gamma='scale', C=10000.0, epsilon=0.1,kernel='rbf')SVR(gamma='scale', C=10000.0, epsilon=0.1,kernel='rbf') Accuracy: 0.8401862803331006 Error: 27899.743171580245
