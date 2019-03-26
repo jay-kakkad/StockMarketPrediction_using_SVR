@@ -1,5 +1,6 @@
-from .utils import Database
+from .utils import Database,Technical_Indicators
 import datetime as dt
+import pandas as pd
 
 
 class SENSEX:
@@ -49,6 +50,26 @@ class SENSEX:
             return None
         else:
             print("Recheck DB")
+
+    def technical_indicators(self):
+        obj = Technical_Indicators(SENSEX())
+        short_ma = obj.MA(9,obj.DF["Close"])
+        long_ma = obj.MA(26,obj.DF["Close"])
+        short_ema = obj.EMWA(9,obj.DF["Close"])
+        long_ema = obj.EMWA(26,obj.DF["Close"])
+        macd = obj.MACD(obj.DF["Close"],obj.OBJ)
+        stok = obj.STOK(obj.DF["Close"],obj.DF["Low"],obj.DF["High"],9)
+        stod = obj.STOD(stok)
+        rsi_6 = obj.RSI(obj.DF["Close"].diff(),6)
+        rsi_12 = obj.RSI(obj.DF["Close"].diff(), 12)
+        # print(rsi_6)
+        # print(type(short_ma),type(long_ma),type(short_ema),type(long_ema),type(stok),type(stod))
+        result = pd.DataFrame({"Date":obj.DF["Date"],"MA_14":short_ma,
+                               "MA_90":long_ma,"EMA_14":short_ema,"EMA_90":long_ema,"MACD":macd,
+                               "%K":stok,"%D":stod,"RSI_6":rsi_6,"RSI_12":rsi_12})
+        print(result.tail())
+        Database().store_data(result,self.COLLECTION_NAME+"ti")
+        return None
 
 if __name__ == "__main__":
     SENSEX().daily_update()

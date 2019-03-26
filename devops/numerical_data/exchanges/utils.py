@@ -21,6 +21,18 @@ class Database:
         except Exception as e:
             print(str(e))
 
+    def store_data(self,df,collection_name):
+        client = Database().initialize_db()
+        db = client["jsrdb"]
+        try:
+            records = json.loads(df.T.to_json(date_format="iso")).values()
+            db[collection_name].insert_many(records)
+            print("Inserted " + str(len(records)) + " Values")
+            client.close()
+        except Exception as e:
+            print(str(e))
+
+
     def retireve_data(self,collection_name,query):
         client = Database().initialize_db()
         db = client["jsrdb"]
@@ -40,11 +52,68 @@ class Database:
             return False
 
     def initialize_db(self):
-        return pymongo.MongoClient("mongodb+srv://jsr:tMDSfCpnqyjSy3Pw@cluster0-10kli.gcp.mongodb.net/test?retryWrites=true")
+        return pymongo.MongoClient("mongodb+srv://jsr:root@cluster0-10kli.gcp.mongodb.net/test?retryWrites=true")
 
 
-def main():
-    print("Tested")
+class Technical_Indicators:
+    OBJ = None
+    DF = None
+
+    def __init__(self, obj=None):
+        self.OBJ = obj
+        self.DF = obj.retrieve_inter_day_data()
+
+    def daily_update(self):
+        return None
+
+    def MA(self, window_size, adj_close):
+        MA = adj_close.rolling(window=window_size).mean()
+        return MA
+
+    def EMWA(self, windows_size, adj_close):
+        EMWA = adj_close.ewm(span=windows_size, adjust=False).mean()
+        return EMWA
+
+    def VMAP(self, adj_close, volume):
+        q = adj_close
+        p = volume
+        VMAP = (p * q).cumsum() / q.cumsum()
+        return VMAP
+
+    def MACD(self, data, obj):
+        MACD = Technical_Indicators(obj).EMWA(26, data) - Technical_Indicators(obj).EMWA(12, data)
+        return MACD
+
+    def STOK(self, close, low, high, n):
+        STOK = ((close - low.rolling(n).min()) / (high.rolling(n).max() - low.rolling(n).min())) * 100
+        return STOK
+
+    def STOD(self, STOK):
+        STOD = STOK.rolling(3).mean()
+        return STOD
+
+    def RSI(self, delta, n):
+        dUp, dDown = delta.copy(), delta.copy()
+        dUp[dUp < 0] = 0
+        dDown[dDown > 0] = 0
+        RolUp = dUp.rolling(n).mean()
+        RolDown = dDown.rolling(n).mean()
+        RS = RolUp / RolDown
+        return RS
+
+    def indicator_ADX(self):
+        return None
+
+    def indicator_BBANDS(self):
+        return None
+
+    def indicator_AD(self):
+        return None
+
+    def indicator_OBV(self):
+        return None
+
+
 
 
 if __name__ == "__main__":

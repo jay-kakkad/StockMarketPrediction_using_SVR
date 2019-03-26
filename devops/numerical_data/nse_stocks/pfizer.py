@@ -58,12 +58,12 @@ class PFIZER:
 
     def technical_indicators(self):
         obj = Technical_Indicators(PFIZER())
-        short_ma = obj.MA(14,obj.DF["Close"])
-        long_ma = obj.MA(90,obj.DF["Close"])
-        short_ema = obj.EMWA(14,obj.DF["Close"])
-        long_ema = obj.EMWA(90,obj.DF["Close"])
+        short_ma = obj.MA(9,obj.DF["Close"])
+        long_ma = obj.MA(26,obj.DF["Close"])
+        short_ema = obj.EMWA(9,obj.DF["Close"])
+        long_ema = obj.EMWA(26,obj.DF["Close"])
         macd = obj.MACD(obj.DF["Close"],obj.OBJ)
-        stok = obj.STOK(obj.DF["Close"],obj.DF["Low"],obj.DF["High"],14)
+        stok = obj.STOK(obj.DF["Close"],obj.DF["Low"],obj.DF["High"],9)
         stod = obj.STOD(stok)
         rsi_6 = obj.RSI(obj.DF["Close"].diff(),6)
         rsi_12 = obj.RSI(obj.DF["Close"].diff(), 12)

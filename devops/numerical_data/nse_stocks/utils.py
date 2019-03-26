@@ -1,14 +1,7 @@
-
 import pandas as pd
 import pymongo
 import pandas_datareader.data as web
 import json
-
-
-# To fetch inter_day data
-# Stock = Name of Stock
-# Source = Name of source from where data will be fetched
-# start_date,end_date = start and end dates between which all data will be fetched
 
 class Database:
     def inter_day_data(self,stock,source,start_date,end_date,collection_name):
@@ -59,7 +52,7 @@ class Database:
 
 
     def initialize_db(self):
-        return pymongo.MongoClient("mongodb+srv://jsr:tMDSfCpnqyjSy3Pw@cluster0-10kli.gcp.mongodb.net/test?retryWrites=true")
+        return pymongo.MongoClient("mongodb+srv://jsr:root@cluster0-10kli.gcp.mongodb.net/test?retryWrites=true")
 
 
     def main(self):
@@ -75,7 +68,6 @@ class Technical_Indicators:
         self.DF =obj.retrieve_inter_day_data()
 
     def daily_update(self):
-
         return None
 
     def MA(self,window_size,adj_close):

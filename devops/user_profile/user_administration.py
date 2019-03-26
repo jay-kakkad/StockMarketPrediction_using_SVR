@@ -101,8 +101,9 @@ class User:
 
 if __name__ == "__main__":
     user = User()
+    x = User(f_name="admin", email="admin2@somaiya.edu", pwd="admin")
     login = user.login_verification("admin@somaiya.edu","admin")
     # print(x.PASSWORD)
-    # x = User(f_name="admin",email="admin2@somaiya.edu",pwd="admin")
+    #
     user.update_user(occupation="admin")
 
