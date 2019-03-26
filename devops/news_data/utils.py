@@ -128,8 +128,11 @@ class NewsUtil:
         Database().delete_data("news_feeds",query)
 
 
-    def retrieve_feeds(self,query):
-        return None
+    def retrieve_feeds(self):
+        collection_name="news_feeds"
+        query={}
+        result = Database().retireve_data(collection_name,query)
+        return result
 
 
 if __name__ == "__main__":
