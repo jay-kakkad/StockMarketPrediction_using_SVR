@@ -1,10 +1,10 @@
-from news_data.feeds import *
-from news_data.utils import *
-from numerical_data.exchanges.sensex import SENSEX
-from numerical_data.exchanges.nifty50 import NIFTY
-from numerical_data.nse_stocks.sunpharma import SUNPHARMA
-from numerical_data.nse_stocks.pfizer import PFIZER
-from numerical_data.nse_stocks.drreddy import DRREDDY
+from news_utility.feeds import *
+from news_utility.utils import *
+from statistical_utility.exchanges.sensex import SENSEX
+from statistical_utility.exchanges.nifty50 import NIFTY
+from statistical_utility.nse_stocks.sunpharma import SUNPHARMA
+from statistical_utility.nse_stocks.pfizer import PFIZER
+from statistical_utility.nse_stocks.drreddy import DRREDDY
 
 def get_news():
     MoneyControl().insert_feeds()
@@ -12,6 +12,20 @@ def get_news():
     FinancialExpress().insert_feeds()
     EconomicTimes().insert_feeds()
     BloombergQuint().insert_feeds()
+
+def redo_stocks():
+    SENSEX().store_inter_day_data()
+    NIFTY().store_inter_day_data()
+    SUNPHARMA().store_inter_day_data()
+    PFIZER().store_inter_day_data()
+    DRREDDY().store_inter_day_data()
+
+def evaluate_ti():
+    SENSEX().technical_indicators()
+    NIFTY().technical_indicators()
+    SUNPHARMA().technical_indicators()
+    PFIZER().technical_indicators()
+    DRREDDY().technical_indicators ()
 
 def get_stocks():
     SENSEX().daily_update()
@@ -22,4 +36,15 @@ def get_stocks():
 
 # NewsUtil().update_date()
 if __name__ == "__main__":
-    get_news()
+    redo_stocks()
+    evaluate_ti()
+    # get_news()
+    # NewsUtil().delete_misfit_date()
+    # result = NewsUtil().retrieve_feeds()
+    # count = 0
+    # for i in range(0,len(result)):
+    #     if result.iloc[i]["description"] == None:
+    #         count = count + 1
+    # print(count)
+    # print(result)
+    # get_stocks()

@@ -4,11 +4,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from pandas.plotting import register_matplotlib_converters
 import pandas as pd
-from numerical_data.nse_stocks.pfizer import PFIZER
-from numerical_data.exchanges.nifty50 import NIFTY
+from statistical_utility.nse_stocks.sunpharma import SUNPHARMA
+from statistical_utility.exchanges.nifty50 import NIFTY
 register_matplotlib_converters()
 
-pfizer = PFIZER()
+pfizer = SUNPHARMA()
 nifty = NIFTY()
 
 df_nifty = nifty.retrieve_inter_day_data()
