@@ -15,6 +15,7 @@ class Database:
             db[collection_name].insert_many(records)
             print("Inserted " + str(len(records)) + " Values")
             client.close()
+            return len(records)
         except Exception as e:
             print(str(e))
 
@@ -68,11 +69,13 @@ class Technical_Indicators:
     OBJ = None
     DF = None
 
+
     def __init__(self,obj=None):
         self.OBJ = obj
         self.DF =obj.retrieve_inter_day_data()
 
     def daily_update(self):
+
         return None
 
     def MA(self,window_size,adj_close):

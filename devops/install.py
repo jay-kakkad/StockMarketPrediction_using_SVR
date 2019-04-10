@@ -5,6 +5,7 @@ from statistical_utility.exchanges.nifty50 import NIFTY
 from statistical_utility.nse_stocks.sunpharma import SUNPHARMA
 from statistical_utility.nse_stocks.pfizer import PFIZER
 from statistical_utility.nse_stocks.drreddy import DRREDDY
+from statistical_utility.nse_stocks.autoline import AUTOLINE
 
 def get_news():
     MoneyControl().insert_feeds()
@@ -30,21 +31,11 @@ def evaluate_ti():
 def get_stocks():
     SENSEX().daily_update()
     NIFTY().daily_update()
-    SUNPHARMA().daily_update()
-    PFIZER().daily_update()
-    DRREDDY().daily_update()
+    # SUNPHARMA().daily_update()
+    # PFIZER().daily_update()
+    # DRREDDY().daily_update()
 
 # NewsUtil().update_date()
 if __name__ == "__main__":
-    redo_stocks()
-    evaluate_ti()
-    # get_news()
-    # NewsUtil().delete_misfit_date()
-    # result = NewsUtil().retrieve_feeds()
-    # count = 0
-    # for i in range(0,len(result)):
-    #     if result.iloc[i]["description"] == None:
-    #         count = count + 1
-    # print(count)
-    # print(result)
-    # get_stocks()
+    # AUTOLINE().store_inter_day_data()
+    # AUTOLINE().technical_indicators()

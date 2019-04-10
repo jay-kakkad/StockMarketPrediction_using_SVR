@@ -3,10 +3,10 @@ import datetime as dt
 import pandas as pd
 
 
-class SUNPHARMA:
-    STOCK = 'SUNPHARMA.NS'
+class AUTOLINE:
+    STOCK = 'AUTOIND.NS'
     SOURCE = 'yahoo'
-    COLLECTION_NAME = 'sunpharma_ns_'
+    COLLECTION_NAME = 'autoline_ns_'
 
     def store_inter_day_data(self):
         collection_name = self.COLLECTION_NAME + "inter_day_values"
@@ -50,7 +50,7 @@ class SUNPHARMA:
             last_working_day = last_working_day + dt.timedelta(days=1)
             collection_name = self.COLLECTION_NAME + "inter_day_values"
             count = Database().inter_day_data(self.STOCK, self.SOURCE, last_working_day, today, collection_name)
-            SUNPHARMA().daily_technical_indicators(count)
+            AUTOLINE().daily_technical_indicators(count)
             return count
         elif today == last_working_day or today.weekday() >= 5:
             print("Data Up to Date")
@@ -59,7 +59,7 @@ class SUNPHARMA:
             print("Recheck DB")
 
     def technical_indicators(self):
-        obj = Technical_Indicators(SUNPHARMA())
+        obj = Technical_Indicators(AUTOLINE())
         short_ma = obj.MA(14, obj.DF["Close"])
         long_ma = obj.MA(90, obj.DF["Close"])
         short_ema = obj.EMWA(14, obj.DF["Close"])
@@ -79,7 +79,7 @@ class SUNPHARMA:
         return None
 
     def daily_technical_indicators(self,count):
-        obj = Technical_Indicators(SUNPHARMA())
+        obj = Technical_Indicators(AUTOLINE())
         split=count+100
         short_ma = obj.MA(14, obj.DF["Close"].iloc[-(split):])
         long_ma = obj.MA(90, obj.DF["Close"].iloc[-(split):])
@@ -100,9 +100,9 @@ class SUNPHARMA:
         return None
 
 def initialize_app():
-    return SUNPHARMA()
+    return AUTOLINE()
 
 if __name__ == "__main__":
     # SUNPHARMA().store_inter_day_data()
-    SUNPHARMA().daily_update()
+    AUTOLINE().daily_update()
     # print(SUNPHARMA().retrieve_inter_day_data())
